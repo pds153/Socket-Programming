@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Live File Changes</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script>
+        $(function () {
+          var socket = io.connect('http://localhost:3000',{
+            reconnection: false
+          });
+          console.log("Client Connected");
+          socket.on('file changed', (updatedFile)=>{
+            for(var i=0;i<updatedFile.length;i++){
+              $('#messages').append($('<li>').text(updatedFile[i]));
+            }
+          }); 
+        });
+      </script>
+  </body>
+</html>
